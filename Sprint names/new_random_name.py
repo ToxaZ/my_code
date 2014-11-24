@@ -43,7 +43,7 @@ check_names = ['artist']
 data_check = pandas.read_csv("sprint_names.csv", names = check_names)
 artists_check = data_check['artist'].values.tolist()
 for l in artists_check:
-    if str(l) == str(sprint_name):
+    if l == sprint_name:
         r = random.randint(0,len(set_artists))
         sprint_name = set_artists[r]
         sprint_name = sprint_name.strip("'[]")
