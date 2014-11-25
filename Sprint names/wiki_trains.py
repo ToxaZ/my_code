@@ -67,9 +67,11 @@ def choose():
     # providing wiki summary (if any)
     print (sprint_name)
     print (trains.iloc[random.randint(0,len(trains)), 1])
-    if trains.iloc[random.randint(0,len(trains)), 1] != 'no link':
+    try:
         sprint_descr = wikipedia.page(sprint_name)
         print (sprint_descr.summary)
+    except:
+        print "no description"
 
 
 # asking if sprint name is good enough
@@ -81,5 +83,7 @@ while choice == False:
         data_check.loc[len(data_check) + 1] = sprint_name
         data_check.to_csv("sprint_names.csv", header = False)
         choice = True
+    elif str(respond) == 'cancel':
+        break
     else:
         choose()
