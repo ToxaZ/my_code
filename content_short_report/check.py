@@ -3,17 +3,25 @@ __author__ = 'ToxaZ'
 
 import pyhs2
 
+def id_split(id):
+    """Splitting sequence of id's to the Hive condition"""
+    sid = id.split()
+    kid = ""
+
+    # creating condition
+    try:
+        for each in sid[0:-1]:
+            kid += 'src_id = %d or ' % (int(each))
+        kid = '%ssrc_id = %s' % (kid, sid[-1])
+        return kid
+    except:
+        return "Please provide space delimited sequence"
+
 def listen(id):
     """Returning the number of playevents longer than 30 sec with ok flag for certain ids"""
 
-    # splitting id's to the list
-    sid = id.split()
-    cid = str()
-
-    # creating condition for Hive
-    for each in sid[0:-1]:
-        cid += 'src_id = %d or ' % (int(each[0:-1]))
-    cid = '(%ssrc_id = %s)' % (cid, sid[-1])
+    #splitting ids
+    cid = id_split(id)
 
     # uncomment the line below to print created Hive query
     # print ('select count(1), src_id from playevent where %s and play_duration > 30 and ok_flag group by src_id;' % (cid))
@@ -40,14 +48,8 @@ def purchase(id, purchase_type):
     else:
         raise AttributeError("provide valid purchase_type: 'release' or 'track'")
 
-    # splitting id's to the list
-    sid = id.split()
-    cid = str()
-
-    # creating condition for Hive
-    for each in sid[0:-1]:
-        cid += '%s = %d or ' % (ctype, int(each[0:-1]))
-    cid = '%s%s = %s' % (cid, ctype, sid[-1])
+    #splitting ids
+    cid = id_split(id)
 
     # uncomment the line below to print created Hive query
     # print ('select count(transaction_id), %s from purchase where %s group by %s;' % (ctype, cid, ctype))
