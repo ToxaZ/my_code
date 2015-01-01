@@ -28,14 +28,18 @@ def listen(id, listen_type):
     cid = id_split(id)
 
     # uncomment the line below to print created Hive query
-    # print ("select count(1), src_id, src_type from playevent where (%s) and src_type = '%s' and play_duration > 30 and ok_flag group by src_id, src_type" % (cid, listen_type))
+    # print ("select count(1), src_id, src_type from playevent"
+    #     "where (%s) and src_type = '%s' and play_duration > 30 and ok_flag"
+    #     "group by src_id, src_type" % (cid, listen_type))
 
     # connecting to Hive, sending query, returning results of query
     conn = pyhs2.connect(host='nif-nif.zvq.me', port=10000, authMechanism="NOSASL", user='hive', password='test',
                          database='default')
     cur = conn.cursor()
     cur.execute(
-        "select count(1), src_id, src_type from playevent where (%s) and src_type = '%s' and play_duration > 30 and ok_flag group by src_id, src_type" % (cid, listen_type))
+        "select count(1), src_id, src_type from playevent"
+        "where (%s) and src_type = '%s' and play_duration > 30 and ok_flag"
+        "group by src_id, src_type" % (cid, listen_type))
     results = cur.fetch()
     cur.close()
     conn.close()
