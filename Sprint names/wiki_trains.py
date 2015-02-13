@@ -24,33 +24,35 @@ for page in page_list:
         links_list.append(link)
 
 # creating variables for columns
-columns = list(['Train name', 'Railroayd', 'Train endpoints', 'Link'])
+columns = list(['Train name', 'Railroad', 'Train endpoints', 'Link'])
 trains = pandas.DataFrame(columns = columns)
 
 # grabbing tables from page
 for each_page in links_list:
+    totable = []
     req = requests.get(each_page)
     soup_page = BeautifulSoup(req.text)
     table = soup_page.find_all("table", { "class" : "wikitable" })
+    totable.append(table)
 
 # converting tables from html to dataset
-for wikitable in table:
-    for row in wikitable.find_all("tr"):
-        cells = row.find_all("td")
-        if len(cells) == 4:
-            train_name = cells[0].find(text = True)
-            railroad = cells[1].find(text = True)
-            train_endpoints = str(cells[2].find_all(text = True))
-            link = str(cells[0].find('a', href = True))
-            if link[3:7] == 'href':
-                link = link.split('"')[1][6:]
-            else:
-                link = 'no link'
-            data = {columns[0]:[train_name], columns[1]:[railroad], columns[2]:[train_endpoints], columns[3]:[link]}
-            app_train = pandas.DataFrame(data)
-            trains = trains.append(app_train)
+for each in totable:
+    for wikitable in each:
+        for row in wikitable.find_all("tr"):
+            cells = row.find_all("td")
+            if len(cells) == 4:
+                train_name = cells[0].find(text = True)
+                railroad = cells[1].find(text = True)
+                train_endpoints = str(cells[2].find_all(text = True))
+                link = str(cells[0].find('a', href = True))
+                if link[3:7] == 'href':
+                    link = link.split('"')[1][6:]
+                else:
+                    link = 'no link'
+                data = {columns[0]:[train_name], columns[1]:[railroad], columns[2]:[train_endpoints], columns[3]:[link]}
+                app_train = pandas.DataFrame(data)
+                trains = trains.append(app_train)
 trains = trains.reset_index(drop = True)
-
 
 def choose():
     global sprint_name
