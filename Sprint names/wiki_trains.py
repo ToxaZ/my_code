@@ -6,6 +6,7 @@ import random
 from bs4 import BeautifulSoup
 
 #creating globals
+wiki_total_table = []
 sprint_name = ''
 choice = False
 check_names = ['Train name']
@@ -29,14 +30,13 @@ trains = pandas.DataFrame(columns = columns)
 
 # grabbing tables from page
 for each_page in links_list:
-    totable = []
     req = requests.get(each_page)
     soup_page = BeautifulSoup(req.text)
     table = soup_page.find_all("table", { "class" : "wikitable" })
-    totable.append(table)
+    wiki_total_table .append(table)
 
 # converting tables from html to dataset
-for each in totable:
+for each in wiki_total_table :
     for wikitable in each:
         for row in wikitable.find_all("tr"):
             cells = row.find_all("td")
