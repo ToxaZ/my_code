@@ -1,4 +1,7 @@
-__author__ = 'Anton Zayniev'
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+__author__ = 'ToxaZ'
 import wikipedia
 import requests
 import pandas
@@ -57,24 +60,23 @@ trains = trains.reset_index(drop = True)
 def choose():
     global sprint_name
     '''choosing new sprint name randomly, providing wiki summary'''
-    sprint_name = trains.iloc[random.randint(0,len(trains)), 3]
+    rand = random.randint(0,len(trains))
     trains_check = data_check['Train name'].values.tolist()
     # checking if it hasn't been used before (sprint_names.csv contains previously used sprint names),
     for l in trains_check:
-        if l == sprint_name:
+        if l == trains.iloc[rand, 3]:
             # creating new one if needed
-            sprint_name = trains.iloc[random.randint(0,len(trains)), 3]
+            rand = random.randint(0,len(trains))
             continue
 
     # providing wiki summary (if any)
-    print (sprint_name)
-    print (trains.iloc[random.randint(0,len(trains)), 1])
+    print ('name: ' + trains.iloc[rand, 3])
+    print ('route: ' + trains.iloc[rand, 2])
+    print ('company: ' + trains.iloc[rand, 1])
     try:
-        sprint_descr = wikipedia.page(sprint_name)
-        print (sprint_descr.summary)
+        print ('description: ' + wikipedia.page(trains.iloc[rand, 0]))
     except:
         print "no description"
-
 
 # asking if sprint name is good enough
 choose()
