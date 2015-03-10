@@ -1,6 +1,16 @@
-<<<<<<< HEAD
-1,Foo
-=======
-1, foo
-
->>>>>>> d1e593176506bf0f0612741005398f71917b1688
+0,<<<<<<< HEAD
+1,1
+2,=======
+3,1
+4,>>>>>>> d1e593176506bf0f0612741005398f71917b1688
+6,Sunnyland
+7,Shawnee
+8,Skyland Special
+9,Trail Blazer
+10,Senator
+11,Santa Fe De Luxe
+12,Wolverine
+13,Three Rivers
+14,
+15,
+16,

@@ -72,5 +72,3 @@ def purchase(id, purchase_type):
     cur.close()
     conn.close()
     return results
-
-purchase('2649573 2654782','release')
