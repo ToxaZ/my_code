@@ -1,6 +1,6 @@
-__author__ = 'az'
+__author__ = 'ToxaZ'
 
 import sys
 
 for line in sys.stdin:
-    print (line)
+    sys.stdout.write(line)

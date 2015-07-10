@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-cat $path | # source file path
-python mapper.py |
+cat $1 |  # source file path
+python3 mapper.py |
 sort -k 1,1 |
-python reducer.py $sep
+python3 reducer.py $2 | # define separator
+sort -r -k 2,2
