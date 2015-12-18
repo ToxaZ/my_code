@@ -1,3 +1,7 @@
 .idea
 zvq/funnels/result.txt
-
+bin/*
+include/*
+lib/*
+local/*
+pip-selfcheck.json
