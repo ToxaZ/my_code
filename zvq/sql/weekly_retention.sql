@@ -3,7 +3,7 @@ with
     -- fitering playevents
     filtered_playevent as (
         select distinct
-            first_day_of_month(packet_date) as month, 
+            first_day_of_week(packet_date) as week, 
             user_id,
             case 
                 when good_app = 'web' 
@@ -31,14 +31,14 @@ with
     --creating registration date table
     reg_date as (
         select
-            min(month) as regdate,
+            min(week) as regdate,
             user_id
         from
             filtered_playevent
         group by
             user_id
         having
-            min(month) >= '2014-07-01'      
+            min(week) >= '2014-07-01'      
     )
 
 -- running queries for different app retention
@@ -46,8 +46,8 @@ select
     count(distinct pl.user_id) as cnt,
     regdate,
     round(
-        datediff(month, regdate)/30
-    ) as month,
+        datediff(week, regdate)/7
+    ) as week,
     app
 from
     filtered_playevent as pl
@@ -59,7 +59,7 @@ from
 group by
     regdate,
     round(
-        datediff(month, regdate)/30
+        datediff(week, regdate)/7
     ),
     app
 
@@ -69,7 +69,7 @@ select
     count(distinct pl.user_id) as cnt,
     regdate, 
     round(
-        datediff(month, regdate)/30
+        datediff(week, regdate)/7
     ) as month, 
     'total' as app
 from
@@ -82,5 +82,5 @@ from
 group by
     regdate,
     round(
-        datediff(month, regdate)/30
+        datediff(week, regdate)/7
     )

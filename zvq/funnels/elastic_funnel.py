@@ -3,6 +3,7 @@ __author__ = 'ToxaZ'
 from pyanalytics.kpi2.metrics.conversion_utils.processor import funnel, time_based_funnel
 import logging
 import inspect
+import pandas as pd
 
 logging.basicConfig(level=logging.DEBUG)
 logging.getLogger('elasticsearch').setLevel(logging.WARNING)
@@ -165,18 +166,21 @@ time_based_subscription_query = {
 # print(time_based_funnel(app_open_version_query, [app_inst_registration_query])) # ZA-469
 # print(time_based_funnel(app_registration_query, [app_trial_query])) # ZA-469
 # print funnel([app_opened_query_ios, active_query_ios], print_query=True) # ZA-537
-# print(time_based_funnel(
-#     app_opened_query_android,
-#     [time_based_trial_query, time_based_subscription_query]
-#     )
-# )  # ZA-537
+print(
+    pandas.read_json(
+        time_based_funnel(
+            app_opened_query_ios,
+            [time_based_trial_query, time_based_subscription_query]
+        )
+    )
+)  # ZA-537
 # print(time_based_funnel(
 #     app_opened_query_android,
 #     [active_query_android]
 #     )
 # )  # ZA-537
-print(time_based_funnel(
-    app_opened_query_ios,
-    [active_query_ios]
-    )
-)  # ZA-537
+# print(time_based_funnel(
+#     app_opened_query_ios,
+#     [active_query_ios]
+#     )
+# )  # ZA-537
