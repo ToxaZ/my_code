@@ -16,10 +16,10 @@ import yaml
 import pandas as pd
 
 # supressing huge elasticsearch output
-logging.basicConfig(level=logging.ERROR)
+logging.basicConfig(level=logging.INFO)
 logging.getLogger('elasticsearch').setLevel(logging.ERROR)
-# uncomment below to recieve elasticsearch servers status
-# logging.getLogger('urllib3').setLevel(logging.ERROR)
+# comment below to recieve elasticsearch servers status
+logging.getLogger('urllib3').setLevel(logging.ERROR)
 
 
 def get_queries():
