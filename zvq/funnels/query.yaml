@@ -1,158 +1,109 @@
----
-name: app_opened_android
-query: 
+
+app_opened_android: 
     type: elastic
-    q: NOT properties.app: fonoteka AND properties.os: android
+    q: "NOT properties.app: fonoteka AND properties.os: android"
     time_unit: month
     index: cs-app_opened*
---
-name: app_opened_ios
-query: 
+app_opened_ios: 
     type: elastic
     q: "NOT properties.app: fonoteka AND properties.os: iOS"
     time_unit: month
     index: cs-app_opened*
----
-name: trial
-query:
+trial:
     type: psql
     q: "select user_id, added from app_subscription where is_trial = true and app != 'fonoteka'"
----
-name: subscription
-query:
+subscription:
     type: psql
     q: "select user_id, added from app_subscription where is_trial = false and app != 'fonoteka'"
----
-name: app_opened_query_android
-query:
+app_opened_query_android:
     type: elastic
     q: "NOT properties.app: fonoteka AND properties.os: android"
     time_unit: month"
     index: cs-app_opened*
----
-name: app_opened_query_ios 
-query:
+app_opened_query_ios:
     type: elastic
     q: "NOT properties.app: fonoteka AND properties.os: iOS"
     index: cs-app_opened*
     agg_field: app_instance
----
-name: install_vmetro_query
-query:
+install_vmetro_query:
     type: elastic
     q: "properties.sub_site: vmetro"
     index: cs-mat_app_install*
     agg_field: app_instance
----
-name: install_ios_query
-query:
+install_ios_query:
     type: elastic
     q: "properties.mat_app: 'Zvooq iOS'"
     index: cs-mat_app_install-2015.1*
     agg_field: app_instance
----
-name: active_query_ai
-query:
+active_query_ai:
     type: elastic
     q: "NOT properties.app: fonoteka"
     index: cs-track_playback*
     agg_field: app_instance
----
-name: active_query_android
-query:
+active_query_android:
     type: elastic
     q: "NOT properties.app: fonoteka AND  properties.phoneType: android"
     index: cs-playevent*
----
-name: active_query_ios
-query:
+active_query_ios:
     type: elastic
     q: "NOT properties.app: fonoteka AND  properties.phoneType: ios"
     index: cs-playevent*
----
-name: app_open_vmetro_query
-query:
+app_open_vmetro_query:
     type: elastic
     q: "mat_info.sub_site:vmetro"
     index: cs-app_opened*
----
-name: subscr_query
-query:
+subscr_query:
     type: psql
     q: "select user_id from app_subscription where is_trial = false and price > 0 and app != 'fonoteka'"
----
-name: genres_shown_query
-query:
+genres_shown_query:
     type: elastic
     q: "features: NEW_GENRE_PAGE"
     index: cs-main_page_genres_shown*
----
-name: web_users_query
-query:
+web_users_query:
     type: elastic
     q: "properties.app:web AND NOT properties.utm-tags.utm_source:topt"
     index: cs-*
----
-name: web_users_query_agg_by_cookie
-query:
+web_users_query_agg_by_cookie:
     type: elastic
     q: "properties.app:web AND NOT properties.utm-tags.utm_source:topt"
     index: cs-*
     time_unit: month
     agg_field: properties.user_cookie
----
-name: active_10m_query
-query:
+active_10m_query:
     type: hive
     q: "select user_id from playevent group by user_id having sum(play_duration) >= 600"
----
-name: mobile_pop_up_query
-query:
+mobile_pop_up_query:
     type: elastic
     q: "properties.type: pop-up"
     index: cs-mobile_shown*
----
-name: mobile_pop_up_action_query
-query:
+mobile_pop_up_action_query:
     type: elastic
     q: "properties.type: pop-up"
     index: cs-mobile_link_requested*
----
-name: app_open_version_query
-query:
+app_open_version_query:
     type: elastic
     q: "properties.os: android AND properties.app_release: 1.9*"
     index: cs-app_opened*
     time_unit: year
     agg_field: app_instance
----
-name: registration_query_agg_by_app_instance
-query:
+registration_query_agg_by_app_instance:
     type: elastic
-    q: *
+    q: "*"
     index: cs-authentication_successful*
     agg_field: app_instance
----
-name: registration_query_agg_by_user_cookie
-query:
+registration_query_agg_by_user_cookie:
     type: elastic
-    q: *
+    q: "*"
     index: cs-authentication_successful*
     time_unit: month
     agg_field: properties.user_cookie
----
-name: app_registration_query_elastic
-query:
+app_registration_query_elastic:
     type: elastic
     q: "properties.os: android AND properties.app_release: 1.10*"
     index: cs-authentication_successful*
----
-name: time_based_trial_query
-query:
+time_based_trial_query:
     type: psql
     q: "select user_id, added from app_subscription where is_trial = true and app != 'fonoteka'"
----
-name: time_based_subscription_query
-query:
+time_based_subscription_query:
     type: psql
     q: "select user_id, added from app_subscription where is_trial = false and app != 'fonoteka'"
