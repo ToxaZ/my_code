@@ -1,4 +1,13 @@
-__author__ = 'ToxaZ'
+#!/usr/bin/env python
+# coding: utf-8
+"""
+utility for calculating funnels using conversion metrics processor
+steps calc settings stored in query.yaml
+funnel steps passed as command-line arguments where agrument = query name
+ex. "python funnel_calc.py app_opened trial subscription"
+
+author -- ToxaZ
+"""
 
 from pyanalytics.kpi2.metrics.conversion_utils.processor import funnel, time_based_funnel
 import logging
@@ -6,6 +15,7 @@ import sys
 import yaml
 import pandas as pd
 
+# supressing huge elasticsearch output
 logging.basicConfig(level=logging.INFO)
 logging.getLogger('elasticsearch').setLevel(logging.WARNING)
 
@@ -19,6 +29,8 @@ def get_queries():
 def make_request(time_based=True):
     first_query_step_funnel = {}
     queries = []
+
+    # retrieving queries for funnel steps names passed from command-line
     funnel_query = map(lambda x: get_queries().get(x), sys.argv[1:])
 
     if time_based is True:
@@ -30,6 +42,5 @@ def make_request(time_based=True):
 def dataframe_results(funnel_response):
     df = pd.DataFrame(funnel_response, index=sys.argv[1:])
     return df.transpose()
-
 
 print dataframe_results(make_request())
