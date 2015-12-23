@@ -16,8 +16,10 @@ import yaml
 import pandas as pd
 
 # supressing huge elasticsearch output
-logging.basicConfig(level=logging.INFO)
-logging.getLogger('elasticsearch').setLevel(logging.WARNING)
+logging.basicConfig(level=logging.ERROR)
+logging.getLogger('elasticsearch').setLevel(logging.ERROR)
+# uncomment below to recieve elasticsearch servers status
+# logging.getLogger('urllib3').setLevel(logging.ERROR)
 
 
 def get_queries():
@@ -43,4 +45,9 @@ def dataframe_results(funnel_response):
     df = pd.DataFrame(funnel_response, index=sys.argv[1:])
     return df.transpose()
 
-print dataframe_results(make_request())
+
+def run_funnel():
+    dataframe_results(make_request())
+
+if __name__ == '__main__':
+    run_funnel()
