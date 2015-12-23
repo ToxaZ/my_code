@@ -101,9 +101,9 @@ app_registration_query_elastic:
     type: elastic
     q: "properties.os: android AND properties.app_release: 1.10*"
     index: cs-authentication_successful*
-time_based_trial_query:
+time_based_trial:
     type: psql
     q: "select user_id, added from app_subscription where is_trial = true and app != 'fonoteka'"
-time_based_subscription_query:
+time_based_subscription:
     type: psql
     q: "select user_id, added from app_subscription where is_trial = false and app != 'fonoteka'"
