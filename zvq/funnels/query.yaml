@@ -1,4 +1,3 @@
-
 app_opened_android: 
     type: elastic
     q: "NOT properties.app: fonoteka AND properties.os: android"
