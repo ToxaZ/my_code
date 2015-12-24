@@ -41,4 +41,3 @@ def make_request(time_based=True):
 
 
 print pd.DataFrame(make_request(), index=sys.argv[1:]).transpose()
-

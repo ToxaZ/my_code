@@ -14,89 +14,89 @@ trial:
 subscription:
     type: psql
     q: "select user_id, added from app_subscription where is_trial = false and app != 'fonoteka'"
-app_opened_query_android:
+app_opened_android:
     type: elastic
     q: "NOT properties.app: fonoteka AND properties.os: android"
     time_unit: month"
     index: cs-app_opened*
-app_opened_query_ios:
+app_opened_ios:
     type: elastic
     q: "NOT properties.app: fonoteka AND properties.os: iOS"
     index: cs-app_opened*
     agg_field: app_instance
-install_vmetro_query:
+install_vmetro:
     type: elastic
     q: "properties.sub_site: vmetro"
     index: cs-mat_app_install*
     agg_field: app_instance
-install_ios_query:
+install_ios:
     type: elastic
     q: "properties.mat_app: 'Zvooq iOS'"
     index: cs-mat_app_install-2015.1*
     agg_field: app_instance
-active_query_ai:
+active_ai:
     type: elastic
     q: "NOT properties.app: fonoteka"
     index: cs-track_playback*
     agg_field: app_instance
-active_query_android:
+active_android:
     type: elastic
     q: "NOT properties.app: fonoteka AND  properties.phoneType: android"
     index: cs-playevent*
-active_query_ios:
+active_ios:
     type: elastic
     q: "NOT properties.app: fonoteka AND  properties.phoneType: ios"
     index: cs-playevent*
-app_open_vmetro_query:
+app_open_vmetro:
     type: elastic
     q: "mat_info.sub_site:vmetro"
     index: cs-app_opened*
-subscr_query:
+subscr:
     type: psql
     q: "select user_id from app_subscription where is_trial = false and price > 0 and app != 'fonoteka'"
-genres_shown_query:
+genres_shown:
     type: elastic
     q: "features: NEW_GENRE_PAGE"
     index: cs-main_page_genres_shown*
-web_users_query:
+web_users:
     type: elastic
     q: "properties.app:web AND NOT properties.utm-tags.utm_source:topt"
     index: cs-*
-web_users_query_agg_by_cookie:
+web_users_agg_by_cookie:
     type: elastic
     q: "properties.app:web AND NOT properties.utm-tags.utm_source:topt"
     index: cs-*
     time_unit: month
     agg_field: properties.user_cookie
-active_10m_query:
+active_10m:
     type: hive
     q: "select user_id from playevent group by user_id having sum(play_duration) >= 600"
-mobile_pop_up_query:
+mobile_pop_up:
     type: elastic
     q: "properties.type: pop-up"
     index: cs-mobile_shown*
-mobile_pop_up_action_query:
+mobile_pop_up_action:
     type: elastic
     q: "properties.type: pop-up"
     index: cs-mobile_link_requested*
-app_open_version_query:
+app_open_version:
     type: elastic
     q: "properties.os: android AND properties.app_release: 1.9*"
     index: cs-app_opened*
     time_unit: year
     agg_field: app_instance
-registration_query_agg_by_app_instance:
+registration_agg_by_app_instance:
     type: elastic
     q: "*"
     index: cs-authentication_successful*
     agg_field: app_instance
-registration_query_agg_by_user_cookie:
+registration_agg_by_user_cookie:
     type: elastic
     q: "*"
     index: cs-authentication_successful*
     time_unit: month
     agg_field: properties.user_cookie
-app_registration_query_elastic:
+app_registration_elastic:
     type: elastic
     q: "properties.os: android AND properties.app_release: 1.10*"
     index: cs-authentication_successful*
