@@ -41,9 +41,7 @@ def make_request(time_based=True):
 
 
 def main():
-    sys.stdout.write(pd.DataFrame(
-        make_request(), index=sys.argv[1:])
-    )
+    print(pd.DataFrame(make_request(), index=sys.argv[1:]).transpose())
 
 # if __name__ == '__main__':
 #     main
