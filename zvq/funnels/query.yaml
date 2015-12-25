@@ -66,7 +66,7 @@ web_users_agg_by_cookie:
     type: elastic
     q: "properties.app:web AND NOT properties.utm-tags.utm_source:topt"
     index: cs-*
-    time_unit: month
+    time_unit: week
     agg_field: properties.user_cookie
 active_10m:
     type: hive
@@ -94,7 +94,7 @@ registration_agg_by_user_cookie:
     type: elastic
     q: "*"
     index: cs-authentication_successful*
-    time_unit: month
+    time_unit: week
     agg_field: properties.user_cookie
 app_registration_elastic:
     type: elastic
@@ -106,3 +106,9 @@ time_based_trial:
 time_based_subscription:
     type: psql
     q: "select user_id, added from app_subscription where is_trial = false and app != 'fonoteka'"
+move_to_zvooq_plus_agg_by_user_cookie:
+    type: elastic
+    q: "NOT properties.utm-tags.utm_source:topt"
+    index: cs-move_to_zvooq_plus_shown*
+    time_unit: week
+    agg_field: properties.user_cookie

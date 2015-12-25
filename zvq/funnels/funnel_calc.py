@@ -40,4 +40,12 @@ def make_request(time_based=True):
         return funnel(funnel_query)
 
 
-print pd.DataFrame(make_request(), index=sys.argv[1:]).transpose()
+def main():
+    sys.stdout.write(pd.DataFrame(
+        make_request(), index=sys.argv[1:])
+    )
+
+# if __name__ == '__main__':
+#     main
+
+main()

@@ -1,6 +1,20 @@
-#!/usr/bin/env bash
+#!/bin/env bash
 
-python3 mapper.py |
-sort -k 1,3 |
-python3 reducer_user_events.py |
-python3 reducer_funnel.py $1 # list of funnel events in funnel order as string
+set -e
+
+ZA_537=(
+    "install_ios registration_agg_by_app_instance" 
+    "app_opened_ios active_query_ios"
+    "app_opened_ios time_based_trial time_based_subscription" 
+    "app_opened_android active_query_android" "app_opened_android time_based_trial time_based_subscription")
+ZA_418=(
+    "web_users_agg_by_cookie registration_agg_by_user_cookie move_to_zvooq_plus_agg_by_user_cookie"
+    )
+
+for funnel in "${ZA_418[@]}";
+do 
+    echo "$funnel"
+    echo ---
+    python funnel_calc.py $funnel
+    echo ---
+done
