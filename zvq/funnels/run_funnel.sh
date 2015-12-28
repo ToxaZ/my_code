@@ -8,7 +8,7 @@ ZA_537=(
     "app_opened_ios time_based_trial time_based_subscription" 
     "app_opened_android active_query_android" "app_opened_android time_based_trial time_based_subscription")
 ZA_418=(
-    "web_users_agg_by_cookie registration_agg_by_user_cookie move_to_zvooq_plus_agg_by_user_cookie"
+   # "web_users_agg_by_cookie registration_agg_by_user_cookie move_to_zvooq_plus_agg_by_user_cookie"
     "move_to_zvooq_plus payture_gate_shown payture_gate_purchase_clicked time_based_subscription"
     )
 

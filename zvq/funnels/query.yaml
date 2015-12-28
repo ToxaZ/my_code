@@ -102,7 +102,7 @@ app_registration_elastic:
     index: cs-authentication_successful*
 time_based_trial:
     type: psql
-    q: "select user_id, added from app_subscription where is_trial = true and app != 'fonoteka'"
+    q: "select user_id, added from app_subscription where is_trial = true and app != 'fonoteka' "
 time_based_subscription:
     type: psql
     q: "select user_id, added from app_subscription where is_trial = false and app != 'fonoteka'"
@@ -113,6 +113,11 @@ move_to_zvooq_plus_agg_by_user_cookie:
     time_unit: week
     agg_field: properties.user_cookie
 move_to_zvooq_plus:
+    type: elastic
+    q: "NOT properties.utm-tags.utm_source:topt"
+    index: cs-move_to_zvooq_plus_shown*
+    # time_unit: week
+payture_gate_shown:
     type: elastic
     q: "properties.url: *payture_gate*"
     index: cs-constructor_block_shown*
