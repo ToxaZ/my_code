@@ -116,7 +116,7 @@ move_to_zvooq_plus:
     type: elastic
     q: "NOT properties.utm-tags.utm_source:topt"
     index: cs-move_to_zvooq_plus_shown*
-    # time_unit: week
+    time_unit: week
 payture_gate_shown:
     type: elastic
     q: "properties.url: *payture_gate*"
