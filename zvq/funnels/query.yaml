@@ -112,3 +112,14 @@ move_to_zvooq_plus_agg_by_user_cookie:
     index: cs-move_to_zvooq_plus_shown*
     time_unit: week
     agg_field: properties.user_cookie
+move_to_zvooq_plus:
+    type: elastic
+    q: "properties.url: *payture_gate*"
+    index: cs-constructor_block_shown*
+    time_unit: week
+payture_gate_purchase_clicked:
+    type: elastic
+    q: "properties.url: *payture_gate*"
+    index: cs-constructor_block_shown*
+    time_unit: week
+
