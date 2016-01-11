@@ -10,7 +10,7 @@ from
     from 
         playevent as pl
     where
-        pl.user_id in (
+        pl.user_id not in (
             select
                 a.user_id
             from
@@ -23,6 +23,8 @@ from
             group by
                 a.user_id
         )
+        and year(pl.day) = 2015
+        and month(pl.day) = 11
     group by
         pl.user_id,
         pl.packet_date,
