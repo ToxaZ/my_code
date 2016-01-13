@@ -1,9 +1,11 @@
 --preprocess
 with
-    -- fitering playevents
+    --fitering playevents
     filtered_playevent as (
         select distinct
-            first_day_of_month(packet_date) as month, 
+            from_unixtime(
+                unix_timestamp(packet_date)
+            ,'yyyy-MM-01') as month,
             user_id,
             case 
                 when good_app = 'web' 

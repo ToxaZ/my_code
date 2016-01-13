@@ -5,8 +5,8 @@ select
 from
     playevent
 where
-    good_app != 'fonoteka'
-    and ok_flag = true
+    ok_flag = true
+    and good_app = 'fonoteka'
 group by
     month(day),
     year(day)
