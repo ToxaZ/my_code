@@ -39,6 +39,16 @@ active_ai:
     q: "NOT properties.app: fonoteka"
     index: cs-track_playback*
     agg_field: app_instance
+active_uk:
+    type: elastic
+    q: "NOT properties.app: fonoteka"
+    index: cs-track_playback*
+    agg_field: properties.user_cookie
+active_ip:
+    type: elastic
+    q: "NOT properties.app: fonoteka"
+    index: cs-track_playback*
+    agg_field: ip
 active_android:
     type: elastic
     q: "NOT properties.app: fonoteka AND  properties.phoneType: android"
@@ -68,6 +78,12 @@ web_users_agg_by_cookie:
     index: cs-*
     time_unit: week
     agg_field: properties.user_cookie
+web_users_topt_ip:
+    type: elastic
+    q: "properties.app:web AND properties.utm-tags.utm_source:topt"
+    index: cs-*
+    time_unit: week
+    agg_field: ip
 active_10m:
     type: hive
     q: "select user_id from playevent group by user_id having sum(play_duration) >= 600"
@@ -117,14 +133,16 @@ move_to_zvooq_plus:
     q: "NOT properties.utm-tags.utm_source:topt"
     index: cs-move_to_zvooq_plus_shown*
     time_unit: week
-payture_gate_shown:
+payture_gate_shown_agg_by_user_cookie:
     type: elastic
     q: "properties.url: *payture_gate*"
     index: cs-constructor_block_shown*
     time_unit: week
-payture_gate_purchase_clicked:
+    agg_field: properties.user_cookie
+payture_gate_purchase_clicked_agg_by_user_cookie:
     type: elastic
     q: "properties.url: *payture_gate*"
     index: cs-constructor_block_shown*
     time_unit: week
+    agg_field: properties.user_cookie
 
