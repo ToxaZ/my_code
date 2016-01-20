@@ -1,0 +1,12 @@
+app_opened:
+    type: elastic
+    q: "*"
+    index: cs-app_opened*
+    agg_field: ["app_instance", "user_id"]
+    name: app_opened
+install_ios:
+    type: elastic
+    q: "properties.mat_app: 'Zvooq iOS'"
+    index: cs-mat_app_install*
+    agg_field: app_instance
+    name: app_opened

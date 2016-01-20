@@ -4,8 +4,8 @@ select
 from
     app_subscription
 where
-    month(added) = 12
-    and year(added) >= 2015
+    month(added) = 1
+    and year(added) >= 2016
     and is_trial = false
     and price > 0
 group by

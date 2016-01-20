@@ -9,14 +9,14 @@ ZA_537=(
     "app_opened_android active_query_android" "app_opened_android time_based_trial time_based_subscription"
     )
 ZA_418=(
-    "web_users_agg_by_cookie registration_agg_by_user_cookie move_to_zvooq_plus_agg_by_user_cookie payture_gate_shown_agg_by_user_cookie payture_gate_purchase_clicked_agg_by_user_cookie"
-    # "move_to_zvooq_plus time_based_subscription"
+    # "web_users_agg_by_cookie registration_agg_by_user_cookie move_to_zvooq_plus_agg_by_user_cookie payture_gate_shown_agg_by_user_cookie payture_gate_purchase_clicked_agg_by_user_cookie"
+    "payture_gate_purchase_clicked_agg_by_user_cookie time_based_subscription"
     )
 marketing=(
     "web_users_topt_ip active_ip"
     )
 
-for funnel in "${marketing[@]}";
+for funnel in "${ZA_418[@]}";
 do 
     echo "$funnel"
     echo ---

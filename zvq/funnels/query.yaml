@@ -1,12 +1,10 @@
 app_opened_android: 
     type: elastic
     q: "NOT properties.app: fonoteka AND properties.os: android"
-    time_unit: month
     index: cs-app_opened*
 app_opened_ios: 
     type: elastic
     q: "NOT properties.app: fonoteka AND properties.os: iOS"
-    time_unit: month
     index: cs-app_opened*
 trial:
     type: psql
@@ -14,12 +12,12 @@ trial:
 subscription:
     type: psql
     q: "select user_id, added from app_subscription where is_trial = false and app != 'fonoteka'"
-app_opened_android:
+app_opened_android_ai:
     type: elastic
     q: "NOT properties.app: fonoteka AND properties.os: android"
     time_unit: month"
     index: cs-app_opened*
-app_opened_ios:
+app_opened_ios_ai:
     type: elastic
     q: "NOT properties.app: fonoteka AND properties.os: iOS"
     index: cs-app_opened*
@@ -61,7 +59,7 @@ app_open_vmetro:
     type: elastic
     q: "mat_info.sub_site:vmetro"
     index: cs-app_opened*
-subscr:
+subscription:
     type: psql
     q: "select user_id from app_subscription where is_trial = false and price > 0 and app != 'fonoteka'"
 genres_shown:
@@ -132,7 +130,6 @@ move_to_zvooq_plus:
     type: elastic
     q: "NOT properties.utm-tags.utm_source:topt"
     index: cs-move_to_zvooq_plus_shown*
-    time_unit: week
 payture_gate_shown_agg_by_user_cookie:
     type: elastic
     q: "properties.url: *payture_gate*"
@@ -142,7 +139,6 @@ payture_gate_shown_agg_by_user_cookie:
 payture_gate_purchase_clicked_agg_by_user_cookie:
     type: elastic
     q: "properties.url: *payture_gate*"
-    index: cs-constructor_block_shown*
+    index: cs-purchase_clicked*
     time_unit: week
-    agg_field: properties.user_cookie
-
+    agg_field: user_cookie
