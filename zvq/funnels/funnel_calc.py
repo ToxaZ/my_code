@@ -18,8 +18,8 @@ import pandas as pd
 
 # supressing unneccessary output
 logging.basicConfig(level=logging.INFO)
-logging.getLogger('elasticsearch').setLevel(logging.WARNING)
-logging.getLogger('urllib3').setLevel(logging.WARNING)
+logging.getLogger('elasticsearch').setLevel(logging.INFO)
+logging.getLogger('urllib3').setLevel(logging.INFO)
 
 
 def get_queries(query_yaml, funnel_steps, time_unit=None):
@@ -58,15 +58,42 @@ def make_request(funnel_type, funnel_query):
         )
 
 
+def time_based_super_funnel_to_df(results):
+    '''converting tb super funnel results to dataframe'''
+    first_run = True
+    fields = []
+    dates = []
+    values = []
+    for time_unit, values_list in results.items():
+        dates.append(time_unit)
+        val = []
+        tmp_fields = []
+        for item in values_list:
+            val.append(item['value'])
+            tmp_fields.append(str(item['field']) + " " + str(item['name']))
+
+        # checking fields consistency
+        if first_run:
+            fields = tmp_fields
+            first_run = False
+        else:
+            if fields != tmp_fields:
+                raise ValueError('item fields are not the same')
+
+        values.append(val)
+    return pd.DataFrame(values, index=dates, columns=fields)
+
+
 def main():
     '''main script logic'''
-    # parsing command-line arguements
-    parser = argparse.ArgumentParser(description='Processing funnel type and funnel steps.')
-    parser.add_argument('-s', '--super', help='Return superfunnel instead of common funnel. '
-                        'Superfunnel allows to aggregate multiple identifiers.',
+    # parsing command-line arguments
+    parser = argparse.ArgumentParser(description='Processing zvq funnels using conversion utils processor '
+                                    '(https://github.com/dreamindustries/zvq-report/tree/master/pyanalytics/kpi2/metrics/conversion_utils).')
+    parser.add_argument('-s', '--super', help='return superfunnel instead of common funnel, '
+                        'superfunnel allows to aggregate multiple identifiers.',
                         action="store_true")
-    parser.add_argument('-t', '--time_based', help='Splitting funnel by time units.'
-                        'Requires specifying a unit ("day", "week" or "month").',
+    parser.add_argument('-t', '--time_based', help='splitting funnel by time units,'
+                        'requires specifying a unit ("day", "week" or "month").',
                         type=str, choices=['day', 'week', 'month'], default=None)
     parser.add_argument('funnel_steps', nargs='+', help='names of funnel steps in config file')
     args = parser.parse_args()
@@ -87,11 +114,36 @@ def main():
     query_file = 'query.yaml'
     if args.super is True:
         query_file = 'super_query.yaml'
+    print funnel_steps
+    print get_queries(
+                    query_file, funnel_steps, args.time_based
+                    )
 
-    # print get_queries(query_file, funnel_steps, args.time_based)
-    # print make_request(funnel_type, get_queries(query_file, funnel_steps, args.time_based))
-
-    return pd.DataFrame(make_request(funnel_type, get_queries(query_file, funnel_steps, args.time_based)), funnel_steps).transpose()
+    if funnel_type == 'time_based_super_funnel':
+        return time_based_super_funnel_to_df(
+            make_request(
+                funnel_type, get_queries(
+                    query_file, funnel_steps, args.time_based
+                )
+            )
+        )
+    elif funnel_type == 'super_funnel':
+        return pd.DataFrame(
+            make_request(
+                funnel_type, get_queries(
+                    query_file, funnel_steps, args.time_based
+                    )
+                ),
+        ).transpose()
+    else:
+        return pd.DataFrame(
+            make_request(
+                funnel_type, get_queries(
+                    query_file, funnel_steps, args.time_based
+                    )
+                ),
+            funnel_steps
+        ).transpose()
 
 # if __name__ == '__main__':
 #     main

@@ -10,7 +10,7 @@ do
     echo $backend
     {
     # ssh az@$backend.zvq.me "zgrep 'GET /napi/sponsor-offers/$sponsor' /var/log/nginx/zvooq.ru-access.log-201512*.gz" | cut -c 48- 
-    ssh az@$backend.zvq.me "zgrep 'GET /napi/sponsor-offers/$sponsor' /var/log/nginx/zvooq.ru-access.log-201601*.gz" | cut -c 48- 
-    ssh az@$backend.zvq.me "fgrep 'GET /napi/sponsor-offers/$sponsor' /var/log/nginx/zvooq.ru-access.log"
+    ssh az@$backend.zvq.me "zgrep 'GET /tm/$sponsor' /var/log/nginx/zvooq.ru-access.log-201601*.gz" | cut -c 48- 
+    ssh az@$backend.zvq.me "fgrep 'GET /tm/$sponsor' /var/log/nginx/zvooq.ru-access.log"
     } >> "$sponsor".log 
 done
